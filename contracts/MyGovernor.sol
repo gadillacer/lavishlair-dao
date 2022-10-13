@@ -29,7 +29,7 @@ contract MyGovernor is Governor, GovernorSettings, GovernorCountingSimple, Gover
         GovernorSettings(
             0,
             20,
-            0
+            1
         )
         GovernorVotes(_token)
         GovernorTimelockCompound(_timelock)

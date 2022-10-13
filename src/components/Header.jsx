@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FaPiedPiperAlt } from 'react-icons/fa'
+import { FaGrav } from 'react-icons/fa'
 import { MdLightMode } from 'react-icons/md'
 import { FaMoon } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
@@ -43,7 +43,7 @@ const Header = () => {
               to={'/'}
               className="flex flex-row justify-start items-center space-x-3"
             >
-              <FaPiedPiperAlt className="cursor-pointer" size={25} />
+              <FaGrav className="cursor-pointer" size={25} />
               <span className="invisible md:visible dark:text-gray-300">
                 {headerText + " DAO"}
               </span>
