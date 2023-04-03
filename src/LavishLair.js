@@ -1,10 +1,11 @@
 import Web3 from 'web3'
 import { setGlobalState, getGlobalState } from './store'
 import MyGovernor from './artifacts/contracts/MyGovernor.sol/MyGovernor.json'
-import SoulBoundNFT from './artifacts/contracts/SoulBoundNFT.sol/SoulBoundNFT.json'
-import DeployedAddresses from './Governor.json'
+import VoteNFT from './artifacts/contracts/MyNftToken.sol/MyNftToken.json'
+import DeployedAddresses from './Addresses.json'
 
 const { ethereum } = window
+const chainId = 5
 
 const connectWallet = async () => {
   try {
@@ -209,16 +210,24 @@ const payoutBeneficiary = async (id) => {
 const loadWeb3 = async () => {
   try {
     if (!ethereum) return alert('Please install Metamask')
-
     window.web3 = new Web3(ethereum)
     await ethereum.request({ method: 'eth_requestAccounts' })
     window.web3 = new Web3(window.web3.currentProvider)
-
+    
     const web3 = window.web3
+    const networkId = await window.web3.eth.net.getId()
+
+    // goerli only
+    if (networkId !== chainId) {
+        await ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: web3.utils.toHex(chainId) }]
+        });
+    }
+
     const accounts = await web3.eth.getAccounts()
     setGlobalState('connectedAccount', accounts[0])
 
-    const networkId = await web3.eth.net.getId()
     // const networkData = deployNetwork
 
     if (DeployedAddresses) {
@@ -228,7 +237,7 @@ const loadWeb3 = async () => {
       )
 
       const tokenContract = new web3.eth.Contract(
-        SoulBoundNFT.abi,
+        VoteNFT.abi,
         DeployedAddresses.token
       )
 

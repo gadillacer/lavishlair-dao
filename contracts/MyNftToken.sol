@@ -12,7 +12,7 @@ contract MyNftToken is ERC721, Ownable, EIP712, ERC721Votes {
 
     Counters.Counter private _tokenIdCounter;
 
-    constructor() ERC721("MyNftToken", "MTK") EIP712("MyNftToken", "1") {}
+    constructor() ERC721("LilNouns", "lNOUN") EIP712("LilNouns", "1") {}
 
     function safeMint(address to) public onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();

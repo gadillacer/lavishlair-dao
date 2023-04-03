@@ -23,6 +23,7 @@ const chainIds = {
   mainnet: 1,
   rinkeby: 4,
   ropsten: 3,
+  testnet_aurora: 1313161555
 };
 
 // Ensure that we have all the environment variables we need.
@@ -50,7 +51,7 @@ function getChainConfig(network: keyof typeof chainIds): NetworkUserConfig {
 }
 
 const config: HardhatUserConfig = {
-  defaultNetwork: "goerli",
+  defaultNetwork: "testnet_aurora",
   gasReporter: {
     currency: "USD",
     enabled: process.env.REPORT_GAS ? true : false,
@@ -64,7 +65,16 @@ const config: HardhatUserConfig = {
       },
       chainId: chainIds.hardhat,
     },
-    goerli: getChainConfig("goerli")
+    goerli: getChainConfig("goerli"),
+    testnet_aurora: {
+      accounts: {
+        count: 10,
+        mnemonic,
+        path: "m/44'/60'/0'/0",
+      },
+      chainId: 1313161555,
+      url: "https://testnet.aurora.dev/"
+    }
   },
   etherscan: { apiKey: process.env.ETH_SCAN_API_KEY },
   paths: {
